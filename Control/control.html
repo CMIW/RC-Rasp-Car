@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<style type="text/css">
+		#moveup{
+			font-size: 2em;
+		}
+		#movedown{
+			font-size: 2em;
+		}
+		#moveleft{
+			font-size: 2em;
+		}
+		#moveright{
+			font-size: 2em;
+		}
+	</style>
+</head>
+<body>
+<center>
+<h1>Web Browser control</h1>
+<br />
+</center>
+Press W to move forward
+<br />
+Press S to move backwards
+<br />
+Press A to turn front wheels to the left
+<br />
+Press D to turn front wheels to the right
+<center>
+<input type="submit" id="moveup" value="UP" onmouseup="moveUpR()" onmousedown="moveUpP()" ontouchstart="moveUpP()" ontouchend="moveUpR()">
+<p>
+
+<input type="submit" id="moveleft" value="LEFT" onmouseup="moveLeftR()" onmousedown="moveLeftP()" ontouchstart="moveLeftP()" ontouchend="moveLeftR()">
+<input type="submit" id="moveright" value="RIGHT" onmouseup="moveRightR()" onmousedown="moveRightP()" ontouchstart="moveRightP()" ontouchend="moveRightR()">
+<p>
+<input type="submit" id="movedown" value="DOWN" onmouseup="moveDownR()" onmousedown="moveDownP()" ontouchstart="moveDownP()" ontouchend="moveDownR()">
+</center>
+<script>
+function moveUpP(){
+	var oReq = new XMLHttpRequest();
+	oReq.open("get","http://192.168.1.9:3000/up-on", true);
+	oReq.send();
+}
+function moveUpR(){
+	var oReq = new XMLHttpRequest();
+	oReq.open("get","http://192.168.1.9:3000/up-off", true);
+	oReq.send();
+}
+
+
+function moveDownP(){
+	var oReq = new XMLHttpRequest();
+	oReq.open("get","http://192.168.1.9:3000/down-on", true);
+	oReq.send();
+}
+function moveDownR(){
+	var oReq = new XMLHttpRequest();
+	oReq.open("get","http://192.168.1.9:3000/down-off", true);
+	oReq.send();
+}
+
+
+function moveLeftP(){
+	var oReq = new XMLHttpRequest();
+	oReq.open("get","http://192.168.1.9:3000/left-on", true);
+	oReq.send();
+}
+function moveLeftR(){
+	var oReq = new XMLHttpRequest();
+	oReq.open("get","http://192.168.1.9:3000/left-off", true);
+	oReq.send();
+}
+
+
+function moveRightP(){
+	var oReq = new XMLHttpRequest();
+	oReq.open("get","http://192.168.1.9:3000/right-on", true);
+	oReq.send();
+}
+function moveRightR(){
+	var oReq = new XMLHttpRequest();
+	oReq.open("get","http://192.168.1.9:3000/right-off", true);
+	oReq.send();
+}
+
+document.onkeydown = function(event) {
+	var key_press = String.fromCharCode(event.keyCode);
+	var key_code = event.keyCode;
+	document.getElementById('kp').innerHTML = key_press;
+    document.getElementById('kc').innerHTML = key_code;
+	var status = document.getElementById('status');
+	status.innerHTML = "DOWN Event Fired For : "+key_press;
+	var oReq = new XMLHttpRequest();
+	if(key_press == "W"){
+		oReq.open("get","http://192.168.1.9:3000/up-on", true);
+		oReq.send();
+	} else if(key_press == "A") {
+		oReq.open("get","http://192.168.1.9:3000/left-on", true);
+		oReq.send();
+	} else if(key_press == "S") {
+		oReq.open("get","http://192.168.1.9:3000/down-on", true);
+		oReq.send();
+	} else if(key_press == "D") {
+		oReq.open("get","http://192.168.1.9:3000/right-on", true);
+		oReq.send();
+	}
+}
+
+document.onkeyup = function(event){
+    var key_press = String.fromCharCode(event.keyCode);
+	var status = document.getElementById('status');
+	var oReq = new XMLHttpRequest();
+	status.innerHTML = "UP Event Fired For : "+key_press;
+	if(key_press == "W"){
+		oReq.open("get","http://192.168.1.9:3000/up-off", true);
+		oReq.send();
+	} else if(key_press == "A") {
+		oReq.open("get","http://192.168.1.9:3000/left-off", true);
+		oReq.send();
+	} else if(key_press == "S") {
+		oReq.open("get","http://192.168.1.9:3000/down-off", true);
+		oReq.send();
+	} else if(key_press == "D") {
+		oReq.open("get","http://192.168.1.9:3000/right-off", true);
+		oReq.send();
+	}
+}
+
+</script>
+</body>
+<span id="kp"></span>
+<br />
+<span id="kc"></span>
+<p id="status"></p>
+</html>
